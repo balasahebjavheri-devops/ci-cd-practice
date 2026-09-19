@@ -1,4 +1,30 @@
-name: My First Pipeline
+/home/ubuntu/ci-cd-practice/.github/workflows/first-pipeline.ymname: My First Pipeline
+
+on: push
+
+jobs:
+  test-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Run tests
+        env:
+          MY_API_KEY: ${{ secrets.MY_API_KEY }}
+        run: |
+          python3 test_app.py
+          python3 test_calculator.py
+          echo "API key length check: ${#MY_API_KEY}"
+          echo "The key is: $MY_API_KEY"name: My First Pipeline
 
 on: push
 
